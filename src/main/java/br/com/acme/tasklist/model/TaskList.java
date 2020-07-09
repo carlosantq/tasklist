@@ -7,9 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "tasklist")
-public class TaskList {
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"hibernateLazyInitializer", "handler", "created"})
+public class TaskList extends Auditor{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TASKLIST")
@@ -19,6 +22,11 @@ public class TaskList {
 	private String name;
 	
 	public TaskList() {
+	}
+	
+	public TaskList(Integer id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 
 	public Integer getId() {
@@ -35,6 +43,11 @@ public class TaskList {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "TaskList [id=" + id + ", name=" + name + "]";
 	}
 
 }
