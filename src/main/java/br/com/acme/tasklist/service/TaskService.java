@@ -42,6 +42,10 @@ public class TaskService {
 	public List<Task> getAllTasksFromTaskList(Integer idTaskList){
 		return taskRepository.findAllTasksFromTaskList(idTaskList);
 	}
+
+	public void removeTasksFromList(Integer idTaskList) {
+		taskRepository.removeTasksFromList(idTaskList);
+	}
 	
 
 }

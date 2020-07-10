@@ -15,7 +15,7 @@ public interface TaskListRepository extends JpaRepository<TaskList, Integer>{
 	@Query(value = "UPDATE public.tasklist SET active = false WHERE id = :idTaskList", nativeQuery = true)
 	public void deleteById(@Param("idTaskList") Integer idTaskList);
 
-	@Query(value = "SELECT t.* FROM public.tasklist WHERE t.active = true", nativeQuery = true)
+	@Query(value = "SELECT t.* FROM public.tasklist t WHERE t.active = true ORDER BY t.id", nativeQuery = true)
 	public List<TaskList> findAllTaskLists();
 
 }

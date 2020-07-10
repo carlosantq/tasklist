@@ -23,5 +23,9 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	
 	@Query(value = "SELECT t.* FROM public.task t WHERE t.tasklist_id = :idTaskList AND t.active = TRUE ORDER BY t.id", nativeQuery = true)
 	List<Task> findAllTasksFromTaskList(@Param("idTaskList") Integer idTaskList);
+
+	@Modifying
+	@Query(value = "UPDATE public.task SET active = FALSE WHERE tasklist_id = :idTaskList", nativeQuery = true)
+	void removeTasksFromList(Integer idTaskList);
 	
 }

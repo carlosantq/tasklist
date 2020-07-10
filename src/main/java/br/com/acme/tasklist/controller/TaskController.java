@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.acme.tasklist.model.Task;
@@ -38,10 +38,21 @@ public class TaskController {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	@DeleteMapping
-	public ResponseEntity removeFromList(@RequestBody Task task){
-		if (taskService.getById(task.getId()).isPresent()) {
-			taskService.removeFromList(task.getId());
+	@DeleteMapping("/{idTask}")
+	public ResponseEntity removeFromList(@PathVariable Integer idTask){
+		if (taskService.getById(idTask).isPresent()) {
+			taskService.removeFromList(idTask);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@DeleteMapping("/taskList/{idTaskList}")
+	public ResponseEntity removeTasksFromList(@PathVariable Integer idTaskList){
+		if (taskListService.getById(idTaskList).isPresent()) {
+			taskService.removeTasksFromList(idTaskList);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
@@ -63,7 +74,7 @@ public class TaskController {
 	}
 	
 	@GetMapping("/tasklist/{idTaskList}")
-	public ResponseEntity<List<Task>> getAllTasksFromTaskList(@RequestParam Integer idTaskList){
+	public ResponseEntity<List<Task>> getAllTasksFromTaskList(@PathVariable Integer idTaskList){
 		return new ResponseEntity<List<Task>>(taskService.getAllTasksFromTaskList(idTaskList), HttpStatus.OK);
 	}
 

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 
 import br.com.acme.tasklist.model.TaskList;
 import br.com.acme.tasklist.service.TaskListService;
+import br.com.acme.tasklist.service.TaskService;
 
 @SpringBootTest
 public class TaskListControllerTest {
@@ -26,6 +27,9 @@ public class TaskListControllerTest {
 	
 	@Mock
 	TaskListService taskListService;
+	
+	@Mock
+	TaskService taskService;
 	
 	TaskList taskList;
 	

@@ -80,7 +80,7 @@ public class TaskControllerTest {
 	public void testRemoveFromList() {
 		when(taskService.getById(task.getId())).thenReturn(Optional.of(task));
 
-		ResponseEntity responseEntity = taskController.removeFromList(task);
+		ResponseEntity responseEntity = taskController.removeFromList(task.getId());
 		
 		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
 	}
@@ -89,7 +89,25 @@ public class TaskControllerTest {
 	public void testRemoveNonExistentTask() {
 		when(taskService.getById(task.getId())).thenReturn(Optional.empty());
 
-		ResponseEntity responseEntity = taskController.removeFromList(task);
+		ResponseEntity responseEntity = taskController.removeFromList(task.getId());
+		
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(400);
+	}
+	
+	@Test
+	public void testRemoveTasksFromList() {
+		when(taskListService.getById(taskList.getId())).thenReturn(Optional.of(taskList));
+
+		ResponseEntity responseEntity = taskController.removeTasksFromList(taskList.getId());
+		
+		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+	}
+	
+	@Test
+	public void testRemoveTasksFromNonExistentList() {
+		when(taskListService.getById(taskList.getId())).thenReturn(Optional.empty());
+
+		ResponseEntity responseEntity = taskController.removeTasksFromList(taskList.getId());
 		
 		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(400);
 	}
